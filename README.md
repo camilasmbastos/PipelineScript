@@ -21,7 +21,9 @@
 - Aplicação
 	- Node.js
 	- Docker
-
+	
+- Ambientes
+	- CI/CD : https://35.186.210.98/
 ## Steps
 
 - Checkout
