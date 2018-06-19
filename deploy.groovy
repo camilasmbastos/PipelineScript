@@ -1,3 +1,5 @@
+getProjectName()
+
 // Definicao dos Stages
 def checkoutStage() {
     stage ('Checkout') {
