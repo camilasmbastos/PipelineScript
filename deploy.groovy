@@ -36,7 +36,7 @@ def archiveStage() {
 
 def deployHMGStage() {
     stage ('Deploy HMG') {
-        //deploy versao snapshot
+        deploy("snapshot")
     }  
 }
 
@@ -57,7 +57,7 @@ def releaseStage() {
 
 def deployPRDStage() {
     stage ('Deploy PRD') {
-        // deploy versao fechada - numerica ou latest
+        deploy("${LAST_VERSION}")
     }  
 }
 // Fim da definição dos Stages
@@ -93,12 +93,16 @@ def release(rType) {
     //sh "git push origin --tags"
     build()
     
-    version = getVersion()
-    pushImage(version)
+    env.LAST_VERSION = getVersion()
+    pushImage(LAST_VERSION)
     
     //Apenas uma perfumaria para saber qual é a versao da release
-    addBadge icon: 'package.gif', id: '', link: '', text: 'Versão: ${version}'
-    createSummary("package.gif").appendText("<b>Versão:</b> ${version}", false, false, false, "black")
+    addBadge icon: 'package.gif', id: '', link: '', text: 'Versão: ${LAST_VERSION}'
+    createSummary("package.gif").appendText("<b>Versão:</b> ${LAST_VERSION}", false, false, false, "black")
+}
+
+def deploy(version) {
+    println "docker pull gcr.io/bitprojecttw/$PROJECT_NAME:$version"
 }
 
 return this;
