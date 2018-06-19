@@ -57,13 +57,12 @@ def releaseStage() {
 
 def deployPRDStage() {
     stage ('Deploy PRD') {
-        deploy("${version}")
+        deploy("$PROJECT_VERSION")
     }  
 }
 // Fim da definição dos Stages
 
 def build() {
-    env.PROJECT_NAME=getProjectName().toLowerCase()
     docker.build("$PROJECT_NAME")
 }
 
@@ -75,12 +74,11 @@ def pushImage(def version) {
 } 
 
 def getProjectName() {
-    def name = sh (script: 'PACKAGE_NAME=$(cat package.json | grep name | head -1 | awk -F: \'{ print $2 }\' | sed \'s/[\\",]//g\' | tr -d \'[[:space:]]\') && echo $PACKAGE_NAME', returnStdout: true).trim()
-    return name
+    env.PROJECT_NAME = sh (script: 'PACKAGE_NAME=$(cat package.json | grep name | head -1 | awk -F: \'{ print $2 }\' | sed \'s/[\\",]//g\' | tr -d \'[[:space:]]\') && echo $PACKAGE_NAME', returnStdout: true).trim()
 }
 
 def getVersion() {
-    env.version = sh (script: 'PACKAGE_VERSION=$(cat package.json | grep version | head -1 | awk -F: \'{ print $2 }\' | sed \'s/[\\",]//g\' | tr -d \'[[:space:]]\') && echo $PACKAGE_VERSION', returnStdout: true).trim()
+    env.PROJECT_VERSION = sh (script: 'PACKAGE_VERSION=$(cat package.json | grep version | head -1 | awk -F: \'{ print $2 }\' | sed \'s/[\\",]//g\' | tr -d \'[[:space:]]\') && echo $PACKAGE_VERSION', returnStdout: true).trim()
 }
 
 def release(rType) {
@@ -95,8 +93,8 @@ def release(rType) {
     pushImage(version)
     
     //Apenas uma perfumaria para saber qual é a versao da release
-    addBadge icon: 'package.gif', id: '', link: '', text: 'Versão: ${version}'
-    createSummary("package.gif").appendText("<b>Versão:</b> ${version}", false, false, false, "black")
+    addBadge icon: 'package.gif', id: '', link: '', text: 'Versão: ${PROJECT_VERSION}'
+    createSummary("package.gif").appendText("<b>Versão:</b> ${PROJECT_VERSION}", false, false, false, "black")
 }
 
 def deploy(version) {
