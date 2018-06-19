@@ -1,7 +1,7 @@
 // Definicao dos Stages
 def checkoutStage() {
     stage ('Checkout') {
-        git scm
+        checkout scm
     }
 }
 
