@@ -32,18 +32,19 @@
 	- Fase de construção dos entregáveis que deverão passar pelas próximas fases.
 - Install Dependencies
 	- Fase de instação das depedências do Projeto 
-- Testes
+- Test
 	- Fase de testes da aplicação
 - Code Quality
 	- Fase de análise de código. Nessa fase poderá ser usada alguma ferramenta de análise estatica como o SonarQube
+- Archive Artifacts
+	- Armazena a aplicação no repositório de artefatos para ser usado no próximo passo. Nessa fase estou usando a Tag Snapshot
 - Deploy Pré-Produção
-	- Deploy para ambiente pré-produção
-- Release
+	- Deploy para ambiente pré-produção da última versão Snapshot
+- Release e Aprovação Deploy Produção
 	- Fase de release da aplicação. Nessa fase,  aplicação deverá ser versionada e disponibilidade em um repositório de artefatos.
-- Aprovação Deploy Produção
 	- Nessa fase irá solicitar uma aprovação do usuário para passar para a próxima fase. Deploy em ambiente produtivo
 - Deploy Produção
 	- Fase de deploy do artefato em Ambiente produtivo.
-
+	
 ## Continuous Delivery X Continuous Deployment
 ![enter image description here](https://sdtimes.com/wp-content/uploads/2015/02/CDvsCD.jpg)
