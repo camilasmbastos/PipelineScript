@@ -57,7 +57,7 @@ def releaseStage() {
 
 def deployPRDStage() {
     stage ('Deploy PRD') {
-        deploy("${LAST_VERSION}")
+        deploy("${version}")
     }  
 }
 // Fim da definição dos Stages
@@ -80,8 +80,7 @@ def getProjectName() {
 }
 
 def getVersion() {
-    def version = sh (script: 'PACKAGE_VERSION=$(cat package.json | grep version | head -1 | awk -F: \'{ print $2 }\' | sed \'s/[\\",]//g\' | tr -d \'[[:space:]]\') && echo $PACKAGE_VERSION', returnStdout: true).trim()
-    return version
+    env.version = sh (script: 'PACKAGE_VERSION=$(cat package.json | grep version | head -1 | awk -F: \'{ print $2 }\' | sed \'s/[\\",]//g\' | tr -d \'[[:space:]]\') && echo $PACKAGE_VERSION', returnStdout: true).trim()
 }
 
 def release(rType) {
@@ -92,13 +91,12 @@ def release(rType) {
     //sh "git push origin HEAD:$git_branch"
     //sh "git push origin --tags"
     build()
-    
-    env.LAST_VERSION = getVersion()
-    pushImage(LAST_VERSION)
+    getVersion()
+    pushImage(version)
     
     //Apenas uma perfumaria para saber qual é a versao da release
-    addBadge icon: 'package.gif', id: '', link: '', text: 'Versão: ${LAST_VERSION}'
-    createSummary("package.gif").appendText("<b>Versão:</b> ${LAST_VERSION}", false, false, false, "black")
+    addBadge icon: 'package.gif', id: '', link: '', text: 'Versão: ${version}'
+    createSummary("package.gif").appendText("<b>Versão:</b> ${version}", false, false, false, "black")
 }
 
 def deploy(version) {
