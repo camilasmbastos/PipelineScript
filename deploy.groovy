@@ -1,9 +1,9 @@
-getProjectName()
 
 // Definicao dos Stages
 def checkoutStage() {
     stage ('Checkout') {
         checkout scm
+        getProjectName()
     }
 }
 
