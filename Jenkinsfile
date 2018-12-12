@@ -82,14 +82,14 @@ def deployPRDStage() {
 
 def build() {
     env.PROJECT_NAME=getProjectName().toLowerCase()
-    docker.build("$PROJECT_NAME")
+   // docker.build("$PROJECT_NAME")
 }
 
 def pushImage(def version) {
-    withDockerRegistry(credentialsId: 'gcr:bitprojecttw', url: 'https://gcr.io/bitprojecttw/v1/') {
+  /*  withDockerRegistry(credentialsId: 'gcr:bitprojecttw', url: 'https://gcr.io/bitprojecttw/v1/') {
             sh "docker tag $PROJECT_NAME gcr.io/bitprojecttw/$PROJECT_NAME:$version"
             sh "docker push gcr.io/bitprojecttw/$PROJECT_NAME:$version"
-        }
+        } */
 } 
 
 def getProjectName() {
