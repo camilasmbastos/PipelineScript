@@ -1,10 +1,4 @@
-def developmentStages() {
-    checkoutStage()
-    buildStage()
-    testStage()
-    archiveStage()
-    deployHMGStage()
-}
+
 // Definicao dos Stages
 def checkoutStage() {
     stage ('Checkout') {
