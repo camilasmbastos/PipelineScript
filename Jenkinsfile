@@ -1,8 +1,7 @@
 properties([buildDiscarder(logRotator(artifactDaysToKeepStr: '', 
                                       artifactNumToKeepStr: '', 
                                       daysToKeepStr: '', 
-                                      numToKeepStr: '5')), 
-            pipelineTriggers([bitbucketPush()])])
+                                      numToKeepStr: '5'))])
             
 timestamps {
     node() {
