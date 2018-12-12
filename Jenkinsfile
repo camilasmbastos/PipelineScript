@@ -6,14 +6,22 @@ properties([buildDiscarder(logRotator(artifactDaysToKeepStr: '',
             
 timestamps {
     node() { 
-       def stages = load 'deploy.groovy'
+        checkoutStage()
         
-        stages.checkoutStage()
+        def stages = load 'deploy.groovy'
+     
         stages.buildStage()
         stages.testStage()
         stages.archiveStage()
         stages.deployHMGStage()
         stages.releaseStage()
         stages.deployPRDStage()
+    }
+}
+
+def checkoutStage() {
+    stage ('Checkout') {
+        checkout scm
+        getProjectName()
     }
 }
