@@ -20,11 +20,14 @@ timestamps {
 def checkoutStage() {
     stage ('Checkout') {
         git 'https://github.com/contentful/the-example-app.nodejs.git'
+        git_branch = sh (script: 'git rev-parse --abbrev-ref HEAD', returnStdout: true).trim()
+        println git_branch
     }
 }
 
 def buildStage() {
     stage ('Build') {
+      
         build()
     }
 }
